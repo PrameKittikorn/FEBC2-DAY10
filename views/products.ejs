@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Products</title>
+</head>
+<body>
+  <h1>Products</h1>
+  <a href="/products?limit=10&page=<%= page %>">Show 10 per page</a>
+  <a href="/products?limit=20&page=<%= page %>">Show 20 per page</a>
+  <ul>
+    <% paginatedProducts.forEach(product => { %>
+      <li>
+        <h2><%= product.name %></h2>
+        <p>Price: $<%= product.price %></p>
+        <p><%= product.description %></p>
+      </li>
+    <% }) %>
+  </ul>
+
+
+  <a href="/products?limit=<%= limit %>&page=<%= page - 1 %>">Previous</a>
+  <a href="/products?limit=<%= limit %>&page=<%= page + 1 %>">Next</a>
+
+</body>
+</html>
