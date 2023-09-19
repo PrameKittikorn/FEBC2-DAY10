@@ -4,6 +4,8 @@ const app = express();
 const port = 3000;
 
 app.set("view engine","ejs");
+app.use(express.urlencoded({ extended: true }));
+
 
 const products = [];
 
@@ -16,6 +18,23 @@ for (let i = 1; i <= 100; i++) {
   };
   products.push(product);
 }
+
+app.get('/add-product', (req, res) => {
+  res.render('add-product');
+});
+
+app.post('/add-product', (req, res) => {
+  const { name, price, description } = req.body;
+  const newProduct = {
+    id: products.length + 1,
+    name,
+    price,
+    description
+  };
+  products.push(newProduct);
+  res.redirect('/products');
+});
+
 
 app.get('/products',(req,res) => {
   const limit = parseInt(req.query.limit) || 10 ;
@@ -30,8 +49,6 @@ app.get('/products',(req,res) => {
   res.render("products",{paginatedProducts,limit,page});
 
 });
-
-
 
 app.get('/', (req, res) => {
   //res.send('Hello World!')
